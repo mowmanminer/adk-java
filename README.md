@@ -1,131 +1,64 @@
-# Agent Development Kit (ADK) for Java
+# IntelliSense for CSS class names in HTML
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Maven Central](https://img.shields.io/maven-central/v/com.google.adk/google-adk)](https://search.maven.org/artifact/com.google.adk/google-adk)
-[![r/agentdevelopmentkit](https://img.shields.io/badge/Reddit-r%2Fagentdevelopmentkit-FF4500?style=flat&logo=reddit&logoColor=white)](https://www.reddit.com/r/agentdevelopmentkit/)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/google/adk-java)
+A Visual Studio Code extension that provides CSS class name completion for the HTML `class` attribute based on the definitions found in your workspace or external files referenced through the `link` element.
 
-<html>
-    <h2 align="center">
-      <img src="https://raw.githubusercontent.com/google/adk-python/main/assets/agent-development-kit.png" width="256"/>
-    </h2>
-    <h3 align="center">
-      An open-source, code-first Java toolkit for building, evaluating, and deploying sophisticated AI agents with flexibility and control.
-    </h3>
-    <h3 align="center">
-      Important Links:
-      <a href="https://google.github.io/adk-docs/">Docs</a> &
-      <a href="https://github.com/google/adk-samples">Samples</a> &
-      <a href="https://github.com/google/adk-python">Python ADK</a>.
-    </h3>
-</html>
+![](https://i.imgur.com/5crMfTj.gif)
 
-Agent Development Kit (ADK) is designed for developers seeking fine-grained
-control and flexibility when building advanced AI agents that are tightly
-integrated with services in Google Cloud. It allows you to define agent
-behavior, orchestration, and tool use directly in code, enabling robust
-debugging, versioning, and deployment anywhere – from your laptop to the cloud.
+## Features
+* Gives you autocompletion for CSS class definitions that can be found in your workspace (defined in CSS files or the in the file types listed in the Supported Language Modes section)
+* Supports external stylesheets referenced through `link` elements in HTML files
+* Command to manually re-cache the class definitions used in the autocompletion
+* User Settings to override which folders and files should be considered or excluded from the caching process
 
---------------------------------------------------------------------------------
+## Supported Language Modes
+* HTML
+* Razor
+* PHP
+* Laravel (Blade)
+* JavaScript
+* JavaScript React (.jsx)
+* TypeScript React (.tsx)
+* Vue (.vue) [requires [octref.vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur)]
+* Twig
+* Markdown (.md)
+* Embedded Ruby (.html.erb) [requires [rebornix.Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)]
+* Handlebars
+* EJS (.ejs)
+* Django template (django-html)
 
-## ✨ Key Features
+## Specific Support
+* "@apply" directive in CSS, SASS and SCSS Files for [Tailwind CSS](https://tailwindcss.com)
+* "className" and "class" in TypeScript React, JavaScript and JavaScript React language modes
+* Emmet abbreviations support triggered by typing a "." (comes disabled by default, check the User Settings topic for more information)
 
--   **Rich Tool Ecosystem**: Utilize pre-built tools, custom functions, OpenAPI
-    specs, or integrate existing tools to give agents diverse capabilities, all
-    for tight integration with the Google ecosystem.
+## Contributions
+You can request new features and contribute to the extension development on its [repository on GitHub](https://github.com/Zignd/HTML-CSS-Class-Completion/issues). Look for an issue you're interested in working on, comment on it to let me know you're working on it and submit your pull request! :D
 
--   **Code-First Development**: Define agent logic, tools, and orchestration
-    directly in Java for ultimate flexibility, testability, and versioning.
+## What's new in version 1.18 (Jan 25, 2019)
+* Added support for Django template (django-html).
 
--   **Modular Multi-Agent Systems**: Design scalable applications by composing
-    multiple specialized agents into flexible hierarchies.
+Check out the [changelog](https://github.com/zignd/HTML-CSS-Class-Completion/blob/master/CHANGELOG.md) for the current and previous updates.
 
-## 🚀 Installation
+## Usage
+If there are HTML or JS files on your workspace, the extension automatically starts and looks for CSS class definitions. In case new CSS classes are defined, or new CSS files are added to the workspace, and you also want auto-completion for them, just hit the lightning icon on the status bar. Also, you can execute the command by pressing `Ctrl+Shift+P`(`Cmd+Shift+P` for Mac) and then typing "Cache CSS class definitions."
 
-If you're using Maven, add the following to your dependencies:
+### User Settings
+The extension supports a few user settings, changes to these settings will be automatically recognized and the caching process will be re-executed.
 
-<!-- {x-version-start:google-adk:released} -->
+#### Folders and Files
 
-```xml
-<dependency>
-  <groupId>com.google.adk</groupId>
-  <artifactId>google-adk</artifactId>
-  <version>0.3.0</version>
-</dependency>
-<!-- Dev UI -->
-<dependency>
-    <groupId>com.google.adk</groupId>
-    <artifactId>google-adk-dev</artifactId>
-    <version>0.3.0</version>
-</dependency>
-```
+You can change the folders and files the extension will consider or exclude during the caching process by setting the following user settings:
 
-<!-- {x-version-end} -->
+* `"html-css-class-completion.includeGlobPattern"` (default: `"**/*.{css,html}"`)
+* `"html-css-class-completion.excludeGlobPattern"` (default: `""`)
 
-To instead use an unreleased version, you could use <https://jitpack.io/#google/adk-java/>;
-see <https://github.com/enola-dev/LearningADK#jitpack> for an example illustrating this.
+#### Emmet
 
-## 📚 Documentation
+Emmet support comes disabled by default, the reason behind this choice is because it the current implementation simply triggers completion when you type a "." (period) and this behavior might be considered a little annoying, but it might change in the future.
 
-For building, evaluating, and deploying agents by follow the Java
-documentation & samples:
+Currently it supports the following languages (those are [language identifier](https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers)): "html", "razor", "php", "blade", "vue", "twig", "markdown", "erb", "handlebars", "ejs", "typescriptreact", "javascript", "javascriptreact".
 
-*   **[Documentation](https://google.github.io/adk-docs)**
-*   **[Samples](https://github.com/google/adk-samples)**
+* `"html-css-class-completion.enableEmmetSupport"` (default: `false`)
 
-## 🏁 Feature Highlight
-
-### Same Features & Familiar Interface As Python ADK:
-
-```java
-import com.google.adk.agents.LlmAgent;
-import com.google.adk.tools.GoogleSearchTool;
-
-LlmAgent rootAgent = LlmAgent.builder()
-    .name("search_assistant")
-    .description("An assistant that can search the web.")
-    .model("gemini-2.0-flash") // Or your preferred models
-    .instruction("You are a helpful assistant. Answer user questions using Google Search when needed.")
-    .tools(new GoogleSearchTool())
-    .build();
-```
-
-### Development UI
-
-Same as the beloved Python Development UI.
-A built-in development UI to help you test, evaluate, debug, and showcase your agent(s).
-<img src="https://raw.githubusercontent.com/google/adk-python/main/assets/adk-web-dev-ui-function-call.png"/>
-
-### Evaluate Agents
-
-Coming soon...
-
-## 🤖 A2A and ADK integration
-
-For remote agent-to-agent communication, ADK integrates with the
-[A2A protocol](https://github.com/google/A2A/).
-Examples coming soon...
-
-## 🤝 Contributing
-
-We welcome contributions from the community! Whether it's bug reports, feature
-requests, documentation improvements, or code contributions, please see our
-[**Contributing Guidelines**](./CONTRIBUTING.md) to get started.
-
-## 📄 License
-
-This project is licensed under the Apache 2.0 License - see the
-[LICENSE](LICENSE) file for details.
-
-## Preview
-
-This feature is subject to the "Pre-GA Offerings Terms" in the General Service
-Terms section of the
-[Service Specific Terms](https://cloud.google.com/terms/service-terms#1). Pre-GA
-features are available "as is" and might have limited support. For more
-information, see the
-[launch stage descriptions](https://cloud.google.com/products?hl=en#product-launch-stages).
-
---------------------------------------------------------------------------------
-
-*Happy Agent Building!*
+![](https://i.imgur.com/O7NjEUW.gif)
+![](https://i.imgur.com/uyiXqMb.gif)
